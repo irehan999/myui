@@ -1,0 +1,6 @@
+{
+  "name": "UI Foundry",
+  "description": "Live Component Gallery Platform for React/Vite",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
