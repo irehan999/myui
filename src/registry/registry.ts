@@ -4,12 +4,14 @@ import React from 'react';
 import PremiumButton from './components/PremiumButton';
 import GlowCard from './components/GlowCard';
 import HeroSection from './components/HeroSection';
+import MyUITemplate from './components/MyUITemplate';
 
 // Use Vite's ?raw feature to get the actual source code of the components
 // This allows us to serve the exact code that runs
 import premiumButtonCode from './components/PremiumButton.tsx?raw';
 import glowCardCode from './components/GlowCard.tsx?raw';
 import heroSectionCode from './components/HeroSection.tsx?raw';
+import myUITemplateCode from '../../public/templates/myui.html?raw';
 
 export interface RegistryItem {
   id: string;
@@ -25,6 +27,20 @@ export interface RegistryItem {
 }
 
 export const componentsRegistry: RegistryItem[] = [
+  {
+    id: 'myui',
+    slug: 'myui',
+    title: 'Lumora Studio Template',
+    description: 'A full-page HTML template for an independent design & engineering studio. Includes complex custom liquid canvas reveals, smooth scrolling, and adaptive grids.',
+    category: 'Templates',
+    dependencies: [],
+    usageInstructions: 'This is a pure HTML/CSS/JS template.\n\nSave the provided source code into an `index.html` file and serve it with any static file server.',
+    component: MyUITemplate,
+    rawCode: myUITemplateCode,
+    usageCode: `<!-- This is a complete HTML document. -->
+<!-- Copy the Component Source into an index.html file to use. -->
+<!-- No build step required. -->`
+  },
   {
     id: 'hero-section',
     slug: 'hero-section',

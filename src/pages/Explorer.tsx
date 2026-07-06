@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { componentsRegistry } from '../registry/registry';
 import { LayoutGrid, Layers, Search } from 'lucide-react';
+import { cn } from '../lib/utils';
 
 export default function Explorer() {
+  const [activeCategory, setActiveCategory] = useState<string>('All');
+  
+  const categories = ['All', ...Array.from(new Set(componentsRegistry.map(item => item.category)))];
+  
+  const filteredComponents = activeCategory === 'All' 
+    ? componentsRegistry 
+    : componentsRegistry.filter(item => item.category === activeCategory);
+
   return (
     <div className="flex flex-col min-h-screen bg-[#050505] text-[#e0e0e0] font-sans overflow-hidden">
       {/* Header */}
@@ -42,7 +51,7 @@ export default function Explorer() {
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto">
         <div className="mx-auto max-w-7xl px-6 py-12">
-          <div className="mb-12">
+          <div className="mb-10">
             <h2 className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
               Premium React Components
             </h2>
@@ -52,37 +61,76 @@ export default function Explorer() {
             </p>
           </div>
 
-          {/* Grid */}
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {componentsRegistry.map((item, index) => (
-              <Link 
-                key={item.id} 
-                to={`/components/${item.slug}`}
-                className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition-all hover:border-white/20 hover:bg-white/10"
+          {/* Category Filters */}
+          <div className="mb-8 flex flex-wrap gap-2">
+            {categories.map(category => (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={cn(
+                  "px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all",
+                  activeCategory === category
+                    ? "bg-indigo-600 text-white shadow-[0_0_15px_rgba(79,70,229,0.3)]"
+                    : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white"
+                )}
               >
-                {/* Preview Thumbnail Area */}
-                <div className="relative flex h-48 items-center justify-center overflow-hidden border-b border-white/5 bg-[#050505] p-6">
-                  <div className="absolute inset-0 opacity-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:14px_24px] transition-opacity group-hover:opacity-100" />
-                  <div className="scale-[0.6] pointer-events-none transform-gpu origin-center">
-                    <item.component />
-                  </div>
-                </div>
-                
-                {/* Info Area */}
-                <div className="flex flex-col gap-2 p-5">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-bold text-lg text-white">{item.title}</h3>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/20 text-indigo-400 uppercase tracking-tighter">
-                      {item.category}
-                    </span>
-                  </div>
-                  <p className="line-clamp-2 text-xs text-white/40">
-                    {item.description}
-                  </p>
-                </div>
-              </Link>
+                {category}
+              </button>
             ))}
           </div>
+
+          {/* Grid */}
+          <motion.div layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <AnimatePresence mode="popLayout">
+              {filteredComponents.map((item) => (
+                <motion.div
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.2 }}
+                  key={item.id}
+                >
+                  <Link 
+                    to={`/components/${item.slug}`}
+                    className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition-all hover:border-white/20 hover:bg-white/10"
+                  >
+                    {/* Preview Thumbnail Area */}
+                    <div className="relative flex h-48 items-center justify-center overflow-hidden border-b border-white/5 bg-[#050505] p-6">
+                      <div className="absolute inset-0 opacity-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:14px_24px] transition-opacity group-hover:opacity-100" />
+                      
+                      {item.category === 'Templates' || item.category === 'Pages' ? (
+                        <div className="absolute inset-0 flex items-center justify-center bg-[#0a0a0a]">
+                          <span className="text-xs uppercase tracking-widest font-bold text-white/30">
+                            {item.title} Template
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="scale-[0.6] pointer-events-none transform-gpu origin-center">
+                          <item.component />
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Info Area */}
+                    <div className="flex flex-1 flex-col justify-between gap-2 p-5">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="font-bold text-lg text-white">{item.title}</h3>
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/20 text-indigo-400 uppercase tracking-tighter">
+                            {item.category}
+                          </span>
+                        </div>
+                        <p className="line-clamp-2 text-xs text-white/40">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
         </div>
       </main>
     </div>
