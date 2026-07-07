@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { componentsRegistry } from '../registry/registry';
-import { ArrowLeft, Check, Copy, Download, ExternalLink, Code2, Play, Package, Terminal } from 'lucide-react';
+import { ArrowLeft, Check, Copy, Download, ExternalLink, Code2, Play, Package, Terminal, Monitor, Smartphone } from 'lucide-react';
 import JSZip from 'jszip';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
@@ -19,6 +19,8 @@ export default function ComponentDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [activeTab, setActiveTab] = useState<Tab>('preview');
   const [codeView, setCodeView] = useState<'source' | 'usage'>('source');
+  const [previewMode, setPreviewMode] = useState<'desktop' | 'mobile'>('desktop');
+  const [activeFileIndex, setActiveFileIndex] = useState(0);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [isCopiedDep, setIsCopiedDep] = useState(false);
@@ -62,7 +64,16 @@ export default function ComponentDetail() {
       const zip = new JSZip();
       
       const folderName = componentItem.title.replace(/\s+/g, '');
-      zip.file(`${folderName}/${folderName}.tsx`, componentItem.rawCode);
+      const folder = zip.folder(folderName);
+      if (!folder) return;
+
+      if (componentItem.files && componentItem.files.length > 0) {
+        componentItem.files.forEach(f => {
+          folder.file(f.name, f.content);
+        });
+      } else {
+        folder.file(`${folderName}.tsx`, componentItem.rawCode);
+      }
       
       const content = await zip.generateAsync({ type: 'blob' });
       const url = URL.createObjectURL(content);
@@ -156,36 +167,45 @@ export default function ComponentDetail() {
                   className="absolute inset-x-6 inset-y-6 flex flex-col z-10"
                 >
                   <div className="w-full h-full rounded-xl border border-white/10 bg-black/40 overflow-hidden flex flex-col shadow-2xl backdrop-blur-sm relative">
-                    <div className="h-8 bg-zinc-900 border-b border-white/5 flex items-center px-4 gap-1.5 z-20 relative">
-                      <div className="w-2.5 h-2.5 rounded-full bg-red-500/20"></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-amber-500/20"></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/20"></div>
-                      <div className="mx-auto flex items-center gap-2">
-                        <span className="text-[10px] text-white/20 font-mono">localhost:3000/preview/{componentItem.slug}</span>
+                    <div className="h-10 bg-zinc-900 border-b border-white/5 flex items-center justify-between px-4 z-20 relative shrink-0">
+                      <div className="flex items-center gap-1.5 w-1/3">
+                        <div className="w-2.5 h-2.5 rounded-full bg-red-500/20"></div>
+                        <div className="w-2.5 h-2.5 rounded-full bg-amber-500/20"></div>
+                        <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/20"></div>
+                      </div>
+                      
+                      <div className="flex items-center justify-center gap-1 bg-[#050505] rounded-md p-1 border border-white/5 w-1/3 max-w-[120px]">
+                         <button onClick={() => setPreviewMode('desktop')} className={cn("p-1.5 rounded transition-colors", previewMode === 'desktop' ? "bg-white/10 text-white shadow-sm" : "text-white/40 hover:text-white")}><Monitor className="w-3.5 h-3.5" /></button>
+                         <button onClick={() => setPreviewMode('mobile')} className={cn("p-1.5 rounded transition-colors", previewMode === 'mobile' ? "bg-white/10 text-white shadow-sm" : "text-white/40 hover:text-white")}><Smartphone className="w-3.5 h-3.5" /></button>
+                      </div>
+
+                      <div className="flex items-center justify-end gap-2 w-1/3">
                         <a 
                           href={`/preview/${componentItem.slug}`} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="text-white/20 hover:text-white transition-colors"
+                          className="text-white/20 hover:text-white transition-colors flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-widest"
                         >
-                          <ExternalLink className="h-3 w-3" />
+                          Open <ExternalLink className="h-3 w-3" />
                         </a>
                       </div>
                     </div>
                     {!iframeLoaded && (
-                      <div className="absolute inset-0 top-8 flex items-center justify-center bg-black/40 z-10">
+                      <div className="absolute inset-0 top-10 flex items-center justify-center bg-black/40 z-10">
                         <div className="flex flex-col items-center gap-4">
                           <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
                           <span className="text-[10px] font-bold tracking-widest uppercase text-indigo-400/80">Rendering Component</span>
                         </div>
                       </div>
                     )}
-                    <iframe 
-                      src={`/preview/${componentItem.slug}`} 
-                      className="flex-1 w-full border-none bg-transparent relative z-0"
-                      title={`${componentItem.title} Preview`}
-                      onLoad={() => setIframeLoaded(true)}
-                    />
+                    <div className={cn("flex-1 bg-[#0a0a0a] overflow-auto flex items-start justify-center transition-all", previewMode === 'mobile' ? "py-8" : "")}>
+                      <iframe 
+                        src={`/preview/${componentItem.slug}`} 
+                        className={cn("border-none bg-transparent relative z-0 transition-all duration-500 origin-top", previewMode === 'mobile' ? "w-[375px] h-[812px] border border-white/10 rounded-3xl shadow-2xl ring-4 ring-white/5" : "w-full h-full")}
+                        title={`${componentItem.title} Preview`}
+                        onLoad={() => setIframeLoaded(true)}
+                      />
+                    </div>
                   </div>
                 </motion.div>
               )}
@@ -199,28 +219,44 @@ export default function ComponentDetail() {
                   className="absolute inset-x-6 inset-y-6 flex flex-col z-10"
                 >
                   <div className="w-full h-full rounded-xl border border-white/10 bg-black/40 overflow-hidden flex flex-col shadow-2xl backdrop-blur-sm">
-                    {componentItem.usageCode && (
-                      <div className="h-10 bg-[#0a0a0a] border-b border-white/5 flex items-center px-2 gap-2">
+                    {componentItem.usageCode && !componentItem.files && (
+                      <div className="h-10 bg-[#0a0a0a] border-b border-white/5 flex items-center px-2 gap-2 shrink-0">
                         <button onClick={() => setCodeView('source')} className={cn("px-3 py-1.5 text-[10px] uppercase font-bold tracking-widest rounded-md transition-colors", codeView === 'source' ? "bg-white/10 text-white" : "text-white/40 hover:text-white hover:bg-white/5")}>Component Source</button>
                         <button onClick={() => setCodeView('usage')} className={cn("px-3 py-1.5 text-[10px] uppercase font-bold tracking-widest rounded-md transition-colors", codeView === 'usage' ? "bg-white/10 text-white" : "text-white/40 hover:text-white hover:bg-white/5")}>Usage Example</button>
                       </div>
                     )}
-                    <div className="h-8 bg-zinc-900 border-b border-white/5 flex items-center justify-between px-4">
+                    <div className="h-8 bg-zinc-900 border-b border-white/5 flex items-center justify-between px-4 shrink-0">
                       <div className="text-[10px] font-mono text-white/40">
-                        {codeView === 'source' ? `${componentItem.title.replace(/\s+/g, '')}.tsx` : 'App.tsx'}
+                        {componentItem.files ? componentItem.files[activeFileIndex]?.name : (codeView === 'source' ? `${componentItem.title.replace(/\s+/g, '')}.tsx` : 'App.tsx')}
                       </div>
-                      <button onClick={() => handleCopy(codeView === 'source' ? componentItem.rawCode : componentItem.usageCode!)} className="text-white/40 hover:text-white transition-colors">
+                      <button onClick={() => handleCopy(componentItem.files ? componentItem.files[activeFileIndex].content : (codeView === 'source' ? componentItem.rawCode : componentItem.usageCode!))} className="text-white/40 hover:text-white transition-colors">
                         {isCopied ? <Check className="h-3.5 w-3.5 text-green-400" /> : <Copy className="h-3.5 w-3.5" />}
                       </button>
                     </div>
-                    <div className="flex-1 overflow-auto bg-[#080808]">
-                      <SyntaxHighlighter
-                        language="tsx"
-                        style={vscDarkPlus}
-                        customStyle={{ margin: 0, padding: '1.5rem', background: 'transparent', fontSize: '0.875rem' }}
-                      >
-                        {codeView === 'source' ? componentItem.rawCode : componentItem.usageCode!}
-                      </SyntaxHighlighter>
+                    <div className="flex-1 overflow-hidden flex">
+                      {componentItem.files && componentItem.files.length > 0 && (
+                        <div className="w-48 border-r border-white/5 bg-[#080808] flex flex-col py-2 overflow-y-auto shrink-0">
+                          <span className="text-[10px] font-bold tracking-widest uppercase text-white/30 px-4 mb-2 mt-2">Files</span>
+                          {componentItem.files.map((f, i) => (
+                            <button 
+                              key={f.name}
+                              onClick={() => setActiveFileIndex(i)}
+                              className={cn("text-left px-4 py-2 text-xs font-mono truncate transition-colors", activeFileIndex === i ? "bg-white/10 text-white" : "text-white/40 hover:bg-white/5 hover:text-white")}
+                            >
+                              {f.name}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                      <div className="flex-1 overflow-auto bg-[#080808]">
+                        <SyntaxHighlighter
+                          language={componentItem.files ? (componentItem.files[activeFileIndex]?.name.endsWith('.html') ? 'html' : componentItem.files[activeFileIndex]?.name.endsWith('.md') ? 'markdown' : 'tsx') : 'tsx'}
+                          style={vscDarkPlus}
+                          customStyle={{ margin: 0, padding: '1.5rem', background: 'transparent', fontSize: '0.875rem' }}
+                        >
+                          {componentItem.files ? componentItem.files[activeFileIndex]?.content : (codeView === 'source' ? componentItem.rawCode : componentItem.usageCode!)}
+                        </SyntaxHighlighter>
+                      </div>
                     </div>
                   </div>
                 </motion.div>

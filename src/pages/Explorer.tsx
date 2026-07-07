@@ -99,17 +99,9 @@ export default function Explorer() {
                     <div className="relative flex h-48 items-center justify-center overflow-hidden border-b border-white/5 bg-[#050505] p-6">
                       <div className="absolute inset-0 opacity-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:14px_24px] transition-opacity group-hover:opacity-100" />
                       
-                      {item.category === 'Templates' || item.category === 'Pages' ? (
-                        <div className="absolute inset-0 flex items-center justify-center bg-[#0a0a0a]">
-                          <span className="text-xs uppercase tracking-widest font-bold text-white/30">
-                            {item.title} Template
-                          </span>
-                        </div>
-                      ) : (
-                        <div className="scale-[0.6] pointer-events-none transform-gpu origin-center">
-                          <item.component />
-                        </div>
-                      )}
+                      <div className="absolute inset-0 w-[400%] h-[400%] origin-top-left scale-[0.25] pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity bg-[#050505]">
+                        <iframe src={`/preview/${item.slug}`} className="w-full h-full border-none overflow-hidden" tabIndex={-1} />
+                      </div>
                     </div>
                     
                     {/* Info Area */}
