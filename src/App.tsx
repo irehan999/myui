@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Explorer from './pages/Explorer';
 import ComponentDetail from './pages/ComponentDetail';
 import Preview from './pages/Preview';
@@ -16,8 +16,9 @@ export default function App() {
         <Route path="/preview/:slug" element={<Preview />} />
         
         {/* Main gallery pages */}
-        <Route path="/" element={<Explorer />} />
+        <Route path="/" element={<Navigate to="/components/soda" replace />} />
         <Route path="/components/:slug" element={<ComponentDetail />} />
+        <Route path="/explorer" element={<Explorer />} />
       </Routes>
     </Router>
   );

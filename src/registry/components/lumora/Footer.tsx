@@ -7,7 +7,7 @@ export default function Footer() {
   <div className="shell">
     <div className="foot-cta">
       <h2 className="foot-h2 reveal-lines" data-delay="100" data-stagger="100">Have a project in mind? Let's get to work.</h2>
-      <button className="pill-btn">
+      <button className="pill-btn" onClick={() => { if ((window as any).openModal) (window as any).openModal(); }}>
         <span className="pill-inner pill-light pill-py-arrow">
           Start a project
           <span className="pill-badge"><svg className="up-right" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9" /></svg></span>
@@ -25,7 +25,7 @@ export default function Footer() {
           <li><a href="#about" className="anim-link">About</a></li>
           <li><a href="#careers" className="anim-link">Careers</a></li>
           <li><a href="#partners" className="anim-link">Partners</a></li>
-          <li><button className="anim-link">Contact</button></li>
+          <li><button onClick={() => { if ((window as any).openModal) (window as any).openModal(); }} className="anim-link">Contact</button></li>
         </ul>
       </div>
       <div>

@@ -24,7 +24,7 @@ export default function About() {
               <a href="#" className="social-chip sc-other" aria-label="Dribbble"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.6" /><circle cx="12" cy="12" r="3.2" /></svg></a>
             </div>
           </div>
-          <button className="pill-btn">
+          <button className="pill-btn" onClick={() => { if ((window as any).scrollToId) (window as any).scrollToId('about'); }}>
             <span className="pill-inner pill-outline pill-py-arrow">
               About Us
               <span className="pill-badge"><svg className="right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>

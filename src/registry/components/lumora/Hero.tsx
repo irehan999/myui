@@ -6,7 +6,7 @@ export default function Hero() {
       <section id="home">
     <div className="liquid-bg" id="liquidBg">
       <img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/lumora-e8b711fc68/hero/after.jpg" alt="" />
-      <canvas id="liquidCanvas" ariaHidden="true"></canvas>
+      <canvas id="liquidCanvas" aria-hidden="true"></canvas>
     </div>
     <div className="hero-vignette"></div>
     <div id="watermark" className="hero-watermark">LUMORA</div>
@@ -32,20 +32,20 @@ export default function Hero() {
           <span>200+ brands shipped</span>
         </div>
         <div className="cta-row" id="heroCtas">
-          <button className="pill-btn">
+          <button className="pill-btn" onClick={() => { if ((window as any).openModal) (window as any).openModal(); }}>
             <span className="pill-inner pill-dark pill-py-arrow">
               Let's Talk
               <span className="pill-badge"><svg className="up-right" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9" /></svg></span>
             </span>
           </button>
-          <button className="pill-btn">
+          <button className="pill-btn" onClick={() => { if ((window as any).scrollToId) (window as any).scrollToId('works'); }}>
             <span className="pill-inner pill-outline pill-py-noarrow">View Work</span>
           </button>
         </div>
       </div>
       
       <div className="hero-right">
-        <div className="hero-card" id="heroCard">
+        <div className="hero-card" id="heroCard" onClick={() => { if ((window as any).nextCard) (window as any).nextCard(); }}>
           <div className="hero-card-inner">
             <div className="hero-card-img"><svg viewBox="0 0 48 48"><path d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z" /></svg></div>
             <div className="hero-card-content">
@@ -68,8 +68,8 @@ export default function Hero() {
                   <div className="hcc-dot active"></div><div className="hcc-dot inactive"></div><div className="hcc-dot inactive"></div>
                 </div>
                 <div className="hcc-nav">
-                  <button className="hcc-btn prev"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" /></svg></button>
-                  <button className="hcc-btn"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" /></svg></button>
+                  <button className="hcc-btn prev" onClick={(event) => { event.stopPropagation(); if ((window as any).prevCard) (window as any).prevCard(); }}><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" /></svg></button>
+                  <button className="hcc-btn" onClick={(event) => { event.stopPropagation(); if ((window as any).nextCard) (window as any).nextCard(); }}><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" /></svg></button>
                 </div>
               </div>
             </div>

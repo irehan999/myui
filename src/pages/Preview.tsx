@@ -20,7 +20,7 @@ export default function Preview() {
 
   return (
     <div className={`flex min-h-screen w-full bg-[#050505] text-[#e0e0e0] font-sans antialiased ${isFullPage ? '' : 'items-center justify-center p-8'}`}>
-      <div className={`relative ${isFullPage ? 'w-full h-screen' : ''}`}>
+      <div className={`relative ${isFullPage ? 'w-full min-h-screen' : ''}`}>
         <Component />
       </div>
     </div>

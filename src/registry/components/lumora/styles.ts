@@ -1,7 +1,7 @@
 export const styles = `
 *{ box-sizing:border-box; margin:0; padding:0 }
-html.lumora-theme-html{ font-size:16px; -webkit-font-smoothing:antialiased }
-body.lumora-theme-body{ background:#ffffff; color:#111111; font-family:'Onest',sans-serif; overflow-x:hidden }
+html{ font-size:16px; -webkit-font-smoothing:antialiased }
+body{ background:#ffffff; color:#111111; font-family:'Onest',sans-serif; overflow-x:hidden }
 a{ color:inherit; text-decoration:none }
 button{ font:inherit; color:inherit; background:none; border:none; cursor:pointer }
 ul{ list-style:none }
@@ -10,10 +10,10 @@ img{ display:block }
 :focus-visible{ outline:2px solid #b15f2c; outline-offset:2px }
 @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important } }
 
-@media (max-width:1920px){ html.lumora-theme-html{ font-size:0.833333vw } }
-@media (max-width:1440px){ html.lumora-theme-html{ font-size:1.111111vw } }
-@media (max-width:1024px){ html.lumora-theme-html{ font-size:1.5625vw } }
-@media (max-width:640px){  html.lumora-theme-html{ font-size:4.444444vw } }
+@media (max-width:1920px){ html{ font-size:0.833333vw } }
+@media (max-width:1440px){ html{ font-size:1.111111vw } }
+@media (max-width:1024px){ html{ font-size:1.5625vw } }
+@media (max-width:640px){  html{ font-size:4.444444vw } }
 
 .shell { max-width:88rem; margin-inline:auto; }
 
@@ -329,4 +329,6 @@ img{ display:block }
 .modal-success .badge svg { width:1em; height:1em; fill:currentColor; }
 .modal-success h2 { font-size:1.5rem; font-weight:600; }
 .modal-success p { max-width:32ch; font-size:.875rem; color:rgba(17,17,17,.6); }
+
+ @media(min-width:640px){.md-block{display:inline!important}} 
 `;

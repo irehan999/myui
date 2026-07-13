@@ -16,6 +16,8 @@ import myUITemplateCode from '../../public/templates/myui.html?raw';
 import saasDashboardCode from './components/SaaSDashboard.tsx?raw';
 
 import lumoraReactAppCode from './components/lumora/App.tsx?raw';
+import lumoraReactLoaderCode from './components/lumora/Loader.tsx?raw';
+import lumoraReactScriptCode from './components/lumora/useLumoraScript.ts?raw';
 import lumoraReactHeaderCode from './components/lumora/Header.tsx?raw';
 import lumoraReactHeroCode from './components/lumora/Hero.tsx?raw';
 import lumoraReactAboutCode from './components/lumora/About.tsx?raw';
@@ -25,6 +27,10 @@ import lumoraReactOverlaysCode from './components/lumora/Overlays.tsx?raw';
 import lumoraReactStylesCode from './components/lumora/styles.ts?raw';
 import lumoraReactFooterCode from './components/lumora/Footer.tsx?raw';
 import LumoraReactApp from './components/lumora/App';
+
+import SodaHero from './components/soda/Soda';
+import sodaHeroCode from './components/soda/Soda.tsx?raw';
+import sodaHeroCssCode from './components/soda/Soda.css?raw';
 
 export interface RegistryFile {
   name: string;
@@ -48,6 +54,21 @@ export interface RegistryItem {
 
 export const componentsRegistry: RegistryItem[] = [
   {
+    id: 'soda',
+    slug: 'soda',
+    title: 'Soda Landing Page',
+    description: 'A full-viewport hero landing page for a fictional "Diet Soda" beverage featuring 3D models and GSAP animations.',
+    category: 'Templates',
+    dependencies: ['gsap', '@google/model-viewer'],
+    usageInstructions: 'npm install gsap @google/model-viewer',
+    component: SodaHero,
+    rawCode: sodaHeroCode,
+    files: [
+      { name: 'Soda.tsx', content: sodaHeroCode },
+      { name: 'Soda.css', content: sodaHeroCssCode }
+    ]
+  },
+  {
     id: 'lumora-react',
     slug: 'lumora-react',
     title: 'Lumora React Template',
@@ -61,6 +82,8 @@ export const componentsRegistry: RegistryItem[] = [
       { name: 'App.tsx', content: lumoraReactAppCode },
       { name: 'styles.ts', content: lumoraReactStylesCode },
       { name: 'components/Header.tsx', content: lumoraReactHeaderCode },
+      { name: 'components/Loader.tsx', content: lumoraReactLoaderCode },
+      { name: 'components/useLumoraScript.ts', content: lumoraReactScriptCode },
       { name: 'components/Hero.tsx', content: lumoraReactHeroCode },
       { name: 'components/About.tsx', content: lumoraReactAboutCode },
       { name: 'components/Portfolio.tsx', content: lumoraReactPortfolioCode },
