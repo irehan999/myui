@@ -32,6 +32,11 @@ import SodaHero from './components/soda/Soda';
 import sodaHeroCode from './components/soda/Soda.tsx?raw';
 import sodaHeroCssCode from './components/soda/Soda.css?raw';
 
+import SereneApp from './components/serene/Serene';
+import sereneAppCode from './components/serene/Serene.tsx?raw';
+import sereneHeroCode from './components/serene/Hero.tsx?raw';
+import sereneQuoteCode from './components/serene/QuoteSection.tsx?raw';
+
 export interface RegistryFile {
   name: string;
   content: string;
@@ -53,6 +58,22 @@ export interface RegistryItem {
 }
 
 export const componentsRegistry: RegistryItem[] = [
+  {
+    id: 'serene',
+    slug: 'serene',
+    title: 'Serene Beauty & Wellness',
+    description: 'A highly polished full-screen landing page with 3D parallax effects and a liquid glass mobile menu. Uses Instrument Serif and GSAP-like requestAnimationFrame animations.',
+    category: 'Templates',
+    dependencies: [],
+    usageInstructions: 'This is a multi-file component. Copy all three files into your project.',
+    component: SereneApp,
+    rawCode: sereneAppCode,
+    files: [
+      { name: 'Serene.tsx', content: sereneAppCode },
+      { name: 'Hero.tsx', content: sereneHeroCode },
+      { name: 'QuoteSection.tsx', content: sereneQuoteCode }
+    ]
+  },
   {
     id: 'soda',
     slug: 'soda',

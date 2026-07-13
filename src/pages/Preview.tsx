@@ -18,9 +18,13 @@ export default function Preview() {
   const Component = componentItem.component;
   const isFullPage = ['Sections', 'Pages', 'Templates'].includes(componentItem.category);
 
+  if (isFullPage) {
+    return <Component />;
+  }
+
   return (
-    <div className={`flex min-h-screen w-full bg-[#050505] text-[#e0e0e0] font-sans antialiased ${isFullPage ? '' : 'items-center justify-center p-8'}`}>
-      <div className={`relative ${isFullPage ? 'w-full min-h-screen' : ''}`}>
+    <div className="flex min-h-screen w-full bg-[#050505] text-[#e0e0e0] font-sans antialiased items-center justify-center p-8">
+      <div className="relative">
         <Component />
       </div>
     </div>

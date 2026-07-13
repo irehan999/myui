@@ -32,7 +32,6 @@ export default function SodaHero() {
   const leavesBGRef = useRef<HTMLDivElement>(null);
   const heroCenterRef = useRef<HTMLDivElement>(null);
   const bubblesContainerRef = useRef<HTMLDivElement>(null);
-  const ingredientsRef = useRef<HTMLDivElement>(null);
 
   const [isSwitching, setIsSwitching] = useState(false);
   const [isModelLoaded, setIsModelLoaded] = useState(false);
@@ -353,25 +352,6 @@ export default function SodaHero() {
     return () => clearInterval(bubbleInterval);
   }, []);
 
-  useEffect(() => {
-    if (!ingredientsRef.current) return;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const cards = entry.target.querySelectorAll('.ingredient-card');
-          gsap.fromTo(cards, 
-            { y: 50, opacity: 0 }, 
-            { y: 0, opacity: 1, duration: 0.8, stagger: 0.2, ease: "power3.out" }
-          );
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.2 });
-
-    observer.observe(ingredientsRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <div className="soda-wrapper" ref={wrapperRef}>
       <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500&family=Manrope:wght@400;700&family=Galada&display=swap" rel="stylesheet" />
@@ -399,10 +379,10 @@ export default function SodaHero() {
       <main className="hero">
         <div className="hero-content">
           <div className="leaves-container" ref={leavesBGRef}>
-            <model-viewer className="leaf l1" src={LEAVES_GLB} environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="45deg 75deg 105%"></model-viewer>
-            <model-viewer className="leaf l2" src={LEAVES_GLB} environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="-30deg 60deg 105%"></model-viewer>
-            <model-viewer className="leaf l3" src={LEAVES_GLB} environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="120deg 85deg 105%"></model-viewer>
-            <model-viewer className="leaf l4" src={LEAVES_GLB} environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="10deg 45deg 105%"></model-viewer>
+            <model-viewer loading="eager" className="leaf l1" src={LEAVES_GLB} environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="45deg 75deg 105%"></model-viewer>
+            <model-viewer loading="eager" className="leaf l2" src={LEAVES_GLB} environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="-30deg 60deg 105%"></model-viewer>
+            <model-viewer loading="eager" className="leaf l3" src={LEAVES_GLB} environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="120deg 85deg 105%"></model-viewer>
+            <model-viewer loading="eager" className="leaf l4" src={LEAVES_GLB} environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="10deg 45deg 105%"></model-viewer>
           </div>
 
           <div className="hero-left">
@@ -436,9 +416,9 @@ export default function SodaHero() {
           </div>
 
           <div className="berries-container-bg" ref={berriesBGRef}>
-            <model-viewer className="berry b7" src={CHERRY_GLB} environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="-20deg 110deg 105%"></model-viewer>
-            <model-viewer className="berry b8" src={CHERRY_GLB} environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="160deg 45deg 105%"></model-viewer>
-            <model-viewer className="berry b9" src={CHERRY_GLB} environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="45deg 20deg 105%"></model-viewer>
+            <model-viewer loading="eager" className="berry b7" src={CHERRY_GLB} environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="-20deg 110deg 105%"></model-viewer>
+            <model-viewer loading="eager" className="berry b8" src={CHERRY_GLB} environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="160deg 45deg 105%"></model-viewer>
+            <model-viewer loading="eager" className="berry b9" src={CHERRY_GLB} environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="45deg 20deg 105%"></model-viewer>
           </div>
 
           <div className="hero-center" ref={heroCenterRef}>
@@ -448,7 +428,7 @@ export default function SodaHero() {
                 <span className="text-xs tracking-widest uppercase font-mono">Loading 3D Assets...</span>
               </div>
             )}
-            <model-viewer 
+            <model-viewer loading="eager" 
               ref={modelViewerRef}
               id="product-model" 
               src={DEIT_SODA2_GLB} 
@@ -466,15 +446,15 @@ export default function SodaHero() {
           </div>
 
           <div className="berries-container" ref={berriesFGRef}>
-            <model-viewer className="berry b1" src={CHERRY_GLB} environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="45deg 120deg 105%"></model-viewer>
-            <model-viewer className="berry b2" src={CHERRY_GLB} environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="-120deg 45deg 105%"></model-viewer>
-            <model-viewer className="berry b3" src={CHERRY_GLB} environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="200deg 90deg 105%"></model-viewer>
-            <model-viewer className="berry b4" src={CHERRY_GLB} environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="10deg 20deg 105%"></model-viewer>
-            <model-viewer className="berry b5" src={CHERRY_GLB} environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="-45deg 160deg 105%"></model-viewer>
-            <model-viewer className="berry b6" src={CHERRY_GLB} environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="80deg 75deg 105%"></model-viewer>
+            <model-viewer loading="eager" className="berry b1" src={CHERRY_GLB} environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="45deg 120deg 105%"></model-viewer>
+            <model-viewer loading="eager" className="berry b2" src={CHERRY_GLB} environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="-120deg 45deg 105%"></model-viewer>
+            <model-viewer loading="eager" className="berry b3" src={CHERRY_GLB} environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="200deg 90deg 105%"></model-viewer>
+            <model-viewer loading="eager" className="berry b4" src={CHERRY_GLB} environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="10deg 20deg 105%"></model-viewer>
+            <model-viewer loading="eager" className="berry b5" src={CHERRY_GLB} environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="-45deg 160deg 105%"></model-viewer>
+            <model-viewer loading="eager" className="berry b6" src={CHERRY_GLB} environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="80deg 75deg 105%"></model-viewer>
           </div>
 
-          <div className="hero-right" style={{ justifyContent: 'space-between' }}>
+          <div className="hero-right">
             <div className="product-carousel">
               <div className="carousel-cards">
                 <div 
@@ -503,7 +483,7 @@ export default function SodaHero() {
                 <button className="nav-arrow">→</button>
               </div>
             </div>
-            <h2 className="side-title large-animation-1" style={{ marginTop: 'auto', paddingBottom: '2rem' }}>
+            <h2 className="side-title large-animation-1">
               <span className="soda-text-outline">Refreshingly</span><br />
               Clean
             </h2>
@@ -511,43 +491,6 @@ export default function SodaHero() {
         </div>
       </main>
 
-      <section ref={ingredientsRef} className="relative z-10 min-h-[80vh] flex flex-col items-center justify-center p-8 bg-[#010c14]/40 backdrop-blur-md border-t border-white/5">
-        <div className="max-w-6xl w-full mx-auto">
-          <div className="text-center mb-16 ingredient-card opacity-0">
-            <h2 className="text-4xl md:text-6xl font-['Galada'] text-white mb-6">The Ingredients</h2>
-            <p className="text-white/60 max-w-2xl mx-auto font-sans text-lg">
-              We sourced the finest natural extracts to create a refreshing beverage without the sugar crash. 
-              Taste the difference in every sip.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="ingredient-card opacity-0 bg-white/5 border border-white/10 p-10 rounded-[2rem] backdrop-blur-sm text-center transform hover:-translate-y-2 transition-transform duration-500">
-              <div className="w-20 h-20 bg-white/5 border border-white/10 rounded-full flex items-center justify-center mx-auto mb-8 text-3xl shadow-[0_0_30px_rgba(255,255,255,0.1)]">🌱</div>
-              <h3 className="text-2xl font-bold text-white mb-4 font-sans">Natural Extracts</h3>
-              <p className="text-white/50 leading-relaxed">
-                Sourced from organic farms, providing that crisp, authentic taste without any artificial additives or coloring.
-              </p>
-            </div>
-            
-            <div className="ingredient-card opacity-0 bg-white/5 border border-white/10 p-10 rounded-[2rem] backdrop-blur-sm text-center transform hover:-translate-y-2 transition-transform duration-500">
-              <div className="w-20 h-20 bg-white/5 border border-white/10 rounded-full flex items-center justify-center mx-auto mb-8 text-3xl shadow-[0_0_30px_rgba(255,255,255,0.1)]">💧</div>
-              <h3 className="text-2xl font-bold text-white mb-4 font-sans">Sparkling Water</h3>
-              <p className="text-white/50 leading-relaxed">
-                Triple-filtered sparkling water with the perfect level of carbonation for maximum, throat-tingling refreshment.
-              </p>
-            </div>
-            
-            <div className="ingredient-card opacity-0 bg-white/5 border border-white/10 p-10 rounded-[2rem] backdrop-blur-sm text-center transform hover:-translate-y-2 transition-transform duration-500">
-              <div className="w-20 h-20 bg-white/5 border border-white/10 rounded-full flex items-center justify-center mx-auto mb-8 text-3xl shadow-[0_0_30px_rgba(255,255,255,0.1)]">🍋</div>
-              <h3 className="text-2xl font-bold text-white mb-4 font-sans">Zero Sugar</h3>
-              <p className="text-white/50 leading-relaxed">
-                Sweetened naturally with a proprietary blend of zero-calorie fruit extracts so you can enjoy without guilt.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <svg style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}>
         <filter id="frosted">
@@ -556,8 +499,8 @@ export default function SodaHero() {
         </filter>
       </svg>
       <div style={{ display: 'none' }}>
-        <model-viewer src={BLUEBERRY_GLB}></model-viewer>
-        <model-viewer src={CHERRY_GLB}></model-viewer>
+        <model-viewer loading="eager" src={BLUEBERRY_GLB}></model-viewer>
+        <model-viewer loading="eager" src={CHERRY_GLB}></model-viewer>
       </div>
     </div>
   );
