@@ -93,7 +93,7 @@ export default function QuoteSection() {
         ref={rainbowRef}
         src="https://soft-zoom-63098134.figma.site/_assets/v11/8d520a7515d06cbfc403d0125e3d05b1a7ccd29c.png"
         alt="Rainbow overlay"
-        className="absolute inset-x-0 top-0 z-30 w-full object-cover"
+        className="absolute inset-x-0 top-0 z-30 w-full h-[150vh] object-cover mix-blend-overlay"
         style={{ willChange: 'transform' }}
         onError={(e) => (e.currentTarget.style.display = 'none')}
       />

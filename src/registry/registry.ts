@@ -37,6 +37,9 @@ import sereneAppCode from './components/serene/Serene.tsx?raw';
 import sereneHeroCode from './components/serene/Hero.tsx?raw';
 import sereneQuoteCode from './components/serene/QuoteSection.tsx?raw';
 
+import ToonhubHero from './components/toonhub/Toonhub';
+import toonhubHeroCode from './components/toonhub/Toonhub.tsx?raw';
+
 export interface RegistryFile {
   name: string;
   content: string;
@@ -58,6 +61,20 @@ export interface RegistryItem {
 }
 
 export const componentsRegistry: RegistryItem[] = [
+  {
+    id: 'toonhub',
+    slug: 'toonhub',
+    title: 'Toonhub Carousel',
+    description: 'A 3D character figurine carousel with beautiful staggered transitions and dynamic background colors.',
+    category: 'Templates',
+    dependencies: ['lucide-react'],
+    usageInstructions: 'This is a single-file React component using Tailwind CSS.',
+    component: ToonhubHero,
+    rawCode: toonhubHeroCode,
+    files: [
+      { name: 'Toonhub.tsx', content: toonhubHeroCode }
+    ]
+  },
   {
     id: 'serene',
     slug: 'serene',

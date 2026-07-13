@@ -11,7 +11,7 @@ export default function App() {
         <Route path="/preview/:slug" element={<Preview />} />
         
         {/* Main gallery pages */}
-        <Route path="/" element={<Navigate to="/components/serene" replace />} />
+        <Route path="/" element={<Navigate to="/components/toonhub" replace />} />
         <Route path="/components/:slug" element={<ComponentDetail />} />
         <Route path="/explorer" element={<Explorer />} />
       </Routes>

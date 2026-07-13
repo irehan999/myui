@@ -164,9 +164,9 @@ export default function ComponentDetail() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="absolute inset-x-6 inset-y-6 flex flex-col z-10"
+                  className="absolute inset-0 flex flex-col z-10"
                 >
-                  <div className="w-full h-full rounded-xl border border-white/10 bg-black/40 overflow-hidden flex flex-col shadow-2xl backdrop-blur-sm relative">
+                  <div className="w-full h-full border-0 bg-black/40 overflow-hidden flex flex-col shadow-2xl backdrop-blur-sm relative">
                     <div className="h-10 bg-zinc-900 border-b border-white/5 flex items-center justify-between px-4 z-20 relative shrink-0">
                       <div className="flex items-center gap-1.5 w-1/3">
                         <div className="w-2.5 h-2.5 rounded-full bg-red-500/20"></div>
@@ -198,10 +198,10 @@ export default function ComponentDetail() {
                         </div>
                       </div>
                     )}
-                    <div className={cn("flex-1 bg-[#0a0a0a] overflow-auto flex items-start justify-center transition-all", previewMode === 'mobile' ? "py-8" : "")}>
+                    <div className={cn("flex-1 overflow-auto flex items-start justify-center transition-all relative", previewMode === 'mobile' ? "py-8 bg-[#0a0a0a]" : "bg-black p-0")}>
                       <iframe 
                         src={`/preview/${componentItem.slug}`} 
-                        className={cn("border-none bg-transparent relative z-0 transition-all duration-500 origin-top", previewMode === 'mobile' ? "w-[375px] h-[812px] border border-white/10 rounded-3xl shadow-2xl ring-4 ring-white/5" : "w-full h-full")}
+                        className={cn("border-none bg-transparent relative z-0 transition-all duration-500 origin-top", previewMode === 'mobile' ? "w-[375px] h-[812px] border border-white/10 rounded-3xl shadow-2xl ring-4 ring-white/5" : "absolute inset-0 w-full h-full")}
                         title={`${componentItem.title} Preview`}
                         onLoad={() => setIframeLoaded(true)}
                       />
